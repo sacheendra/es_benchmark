@@ -1,0 +1,35 @@
+{
+	"ImportPath": "github.com/sacheendra/es_benchmark",
+	"GoVersion": "go1.4",
+	"Deps": [
+		{
+			"ImportPath": "github.com/araddon/gou",
+			"Rev": "2c3ebe13a9748b26bd2c1050a7933da9dab34e99"
+		},
+		{
+			"ImportPath": "github.com/bitly/go-hostpool",
+			"Rev": "d0e59c22a56e8dadfed24f74f452cea5a52722d2"
+		},
+		{
+			"ImportPath": "github.com/joshlf13/erreq",
+			"Rev": "494d1977b16901be0bf183d048a7d374059acec0"
+		},
+		{
+			"ImportPath": "github.com/joshlf13/errlist",
+			"Rev": "3f42a44ac05a3ee094cff471e4ef9da049889cb5"
+		},
+		{
+			"ImportPath": "github.com/mattbaird/elastigo/lib",
+			"Comment": "v1.0-162-g7ea98ae",
+			"Rev": "7ea98aee9ffdf443c33c78c31f14568a16c6f8f2"
+		},
+		{
+			"ImportPath": "github.com/satori/go.uuid",
+			"Rev": "242673bbc820e051ef00033e274d32e08ece9e15"
+		},
+		{
+			"ImportPath": "github.com/synful/grammar",
+			"Rev": "f0aa360f4ee4ac3f0c3d4bd1c718cf980588adc8"
+		}
+	]
+}
