@@ -44,12 +44,13 @@ func main() {
 
 func indexDocuments() {
 	b := NewExponentialBackOff()
+	b.Reset()
 	for {
 		err := indexDocument()
 		if err != nil {
 			if skip := b.NextBackOff(); skip == Stop {
 				log.Println(err)
-				b = NewExponentialBackOff()
+				b.Reset()
 			} else {
 				time.Sleep(skip)
 			}
