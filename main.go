@@ -8,6 +8,7 @@ import (
 	"sync"
 	"time"
 
+	. "github.com/cenkalti/backoff"
 	es "github.com/mattbaird/elastigo/lib"
 	"github.com/satori/go.uuid"
 	"github.com/synful/grammar"
@@ -42,12 +43,21 @@ func main() {
 }
 
 func indexDocuments() {
+	b := NewExponentialBackOff()
 	for {
-		indexDocument()
+		err := indexDocument()
+		if err != nil {
+			if skip := b.NextBackOff(); skip == Stop {
+				log.Println(err)
+				b = NewExponentialBackOff()
+			} else {
+				time.Sleep(skip)
+			}
+		}
 	}
 }
 
-func indexDocument() {
+func indexDocument() error {
 	id := uuid.NewV1().String()
 	var timestamp int64 = time.Now().UnixNano()
 
@@ -68,7 +78,6 @@ func indexDocument() {
 	}
 
 	_, err := esClient.Update("appbase", "bench1", id, nil, body)
-	if err != nil {
-		log.Println(err)
-	}
+
+	return err
 }

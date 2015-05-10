@@ -11,6 +11,10 @@
 			"Rev": "d0e59c22a56e8dadfed24f74f452cea5a52722d2"
 		},
 		{
+			"ImportPath": "github.com/cenkalti/backoff",
+			"Rev": "9831e1e25c874e0a0601b6dc43641071414eec7a"
+		},
+		{
 			"ImportPath": "github.com/joshlf13/erreq",
 			"Rev": "494d1977b16901be0bf183d048a7d374059acec0"
 		},
