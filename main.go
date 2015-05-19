@@ -39,8 +39,8 @@ func main() {
 		go indexDocuments()
 		wg.Add(1)
 
-		go indexDocumentsExtra()
-		wg.Add(1)
+		//go indexDocumentsExtra()
+		//wg.Add(1)
 	}
 	wg.Wait()
 }
