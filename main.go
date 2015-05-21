@@ -36,11 +36,11 @@ func main() {
 	}
 
 	for i := 0; i < numThreads; i++ {
-		go indexDocuments()
-		wg.Add(1)
-
-		//go indexDocumentsExtra()
+		//go indexDocuments()
 		//wg.Add(1)
+
+		go indexDocumentsExtra()
+		wg.Add(1)
 	}
 	wg.Wait()
 }
@@ -103,26 +103,12 @@ func indexDocumentsExtra() {
 }
 
 func indexDocumentExtra() error {
-	id := uuid.NewV1().String()
-	var timestamp int64 = time.Now().UnixNano()
-
 	buf := new(bytes.Buffer)
 	dummy.Speak(buf)
 
-	body := map[string]interface{}{
-		"upsert":          map[string]interface{}{},
-		"scripted_upsert": true,
-		"lang":            "groovy",
-		"script_id":       "updateDocument",
-		"params": map[string]interface{}{
-			"timestamp": timestamp,
-			"update": map[string]interface{}{
+	_, err := esClient.Index("appbase", "bench1", "", nil, map[string]interface{}{
 				"message": buf.String(),
-			},
-		},
-	}
-
-	_, err := esClient.Update("appbase_extra", "bench1", id, nil, body)
+			})
 
 	return err
 }
