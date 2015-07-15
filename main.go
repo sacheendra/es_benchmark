@@ -9,21 +9,22 @@ import (
 	"time"
 
 	. "github.com/cenkalti/backoff"
-	es "github.com/mattbaird/elastigo/lib"
-	"github.com/satori/go.uuid"
+	"github.com/olivere/elastic"
 	"github.com/synful/grammar"
 )
 
-var esClient *es.Conn
+var client *elastic.Client
 var dummy *grammar.Grammar
 var wg sync.WaitGroup
 
 func main() {
 	numThreads, _ := strconv.Atoi(os.Args[1])
 
-	esClient = es.NewConn()
-	esClient.SetPort("9200")
-	esClient.SetHosts([]string{"localhost"})
+	var err error
+	client, err = elastic.NewClient(elastic.SetURL("http://localhost:9200"))
+	if err != nil {
+		log.Fatalln(err)
+	}
 
 	file, err := os.Open("./grammar/wellformedGrammar.txt")
 	if err != nil {
@@ -36,10 +37,7 @@ func main() {
 	}
 
 	for i := 0; i < numThreads; i++ {
-		//go indexDocuments()
-		//wg.Add(1)
-
-		go indexDocumentsExtra()
+		go indexDocuments()
 		wg.Add(1)
 	}
 	wg.Wait()
@@ -62,53 +60,12 @@ func indexDocuments() {
 }
 
 func indexDocument() error {
-	id := uuid.NewV1().String()
-	var timestamp int64 = time.Now().UnixNano()
-
 	buf := new(bytes.Buffer)
 	dummy.Speak(buf)
 
-	body := map[string]interface{}{
-		"upsert":          map[string]interface{}{},
-		"scripted_upsert": true,
-		"lang":            "groovy",
-		"script_id":       "updateDocument",
-		"params": map[string]interface{}{
-			"timestamp": timestamp,
-			"update": map[string]interface{}{
-				"message": buf.String(),
-			},
-		},
-	}
-
-	_, err := esClient.Update("appbase", "bench1", id, nil, body)
-
-	return err
-}
-
-func indexDocumentsExtra() {
-	b := NewExponentialBackOff()
-	b.Reset()
-	for {
-		err := indexDocumentExtra()
-		if err != nil {
-			if skip := b.NextBackOff(); skip == Stop {
-				log.Println(err)
-				b.Reset()
-			} else {
-				time.Sleep(skip)
-			}
-		}
-	}
-}
-
-func indexDocumentExtra() error {
-	buf := new(bytes.Buffer)
-	dummy.Speak(buf)
-
-	_, err := esClient.Index("appbase", "bench1", "", nil, map[string]interface{}{
-				"message": buf.String(),
-			})
+	_, err := client.Index().Index("appbase").Type("bench1").BodyJson(map[string]interface{}{
+		"message": buf.String(),
+	}).Do()
 
 	return err
 }
