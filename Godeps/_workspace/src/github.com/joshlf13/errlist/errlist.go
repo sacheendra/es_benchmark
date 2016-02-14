@@ -4,7 +4,7 @@
 
 // Package errlist contains a type compatible with the error interface which handles lists of
 // errors. All of the methods in this package are nil-safe; that is, calling them on nil
-// pointers is expected behavior. errlist implements the erreq interface 
+// pointers is expected behavior. errlist implements the erreq interface
 // (github.com/joshlf13/erreq) which allows two lists to be checked for equality.
 //
 // Note that functions in this package which return Errlist pointers do not do so merely
@@ -16,7 +16,7 @@ package errlist
 
 import (
 	"errors"
-	"github.com/joshlf13/erreq"
+	"github.com/sacheendra/es_benchmark/Godeps/_workspace/src/github.com/joshlf13/erreq"
 )
 
 // An error type which supports lists of errors.
@@ -66,7 +66,7 @@ func NewError(e error) *Errlist {
 	return &erl
 }
 
-// Create an error from e and append 
+// Create an error from e and append
 // it to the error list, or if the
 // list is nil, create a new list
 // with the error as its first element.
@@ -166,8 +166,8 @@ func (erl *Errlist) Num() int {
 	return erl.num
 }
 
-// Err returns an error equivalent 
-// to this error list. If the list 
+// Err returns an error equivalent
+// to this error list. If the list
 // is empty, Err returns nil.
 // This is meant primarily for
 // checking against nil values,
@@ -196,8 +196,8 @@ func (erl *Errlist) Err() error {
 // of the pair implement the erreq interface.
 // If they do, erreq.Equals is used.
 // Otherwise, pointer equality is used.
-// Lists of different length are never equal. 
-// Two nil lists are always equal. A nil list 
+// Lists of different length are never equal.
+// Two nil lists are always equal. A nil list
 // is never equal to a non-nil list.
 func (erl1 *Errlist) Equals(e erreq.Error) bool {
 	erl2, ok := e.(*Errlist)

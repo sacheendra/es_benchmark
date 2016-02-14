@@ -1,10 +1,21 @@
 {
 	"ImportPath": "github.com/sacheendra/es_benchmark",
-	"GoVersion": "go1.4",
+	"GoVersion": "go1.5",
+	"Packages": [
+		"./..."
+	],
 	"Deps": [
 		{
 			"ImportPath": "github.com/cenkalti/backoff",
-			"Rev": "9831e1e25c874e0a0601b6dc43641071414eec7a"
+			"Rev": "4dc77674aceaabba2c7e3da25d4c823edfb73f99"
+		},
+		{
+			"ImportPath": "github.com/gosuri/uilive",
+			"Rev": "efb88ccd059957c48f24f9d351d33a0eb00ede41"
+		},
+		{
+			"ImportPath": "github.com/joshlf/grammar",
+			"Rev": "f0aa360f4ee4ac3f0c3d4bd1c718cf980588adc8"
 		},
 		{
 			"ImportPath": "github.com/joshlf13/erreq",
@@ -15,13 +26,17 @@
 			"Rev": "3f42a44ac05a3ee094cff471e4ef9da049889cb5"
 		},
 		{
-			"ImportPath": "github.com/olivere/elastic",
-			"Comment": "v1-78-g088eb40",
-			"Rev": "088eb405ccb533432aeae610d1b6d769a5b933af"
+			"ImportPath": "github.com/mattn/go-isatty",
+			"Rev": "56b76bdf51f7708750eac80fa38b952bb9f32639"
 		},
 		{
-			"ImportPath": "github.com/synful/grammar",
-			"Rev": "f0aa360f4ee4ac3f0c3d4bd1c718cf980588adc8"
+			"ImportPath": "golang.org/x/sys/unix",
+			"Rev": "50c6bc5e4292a1d4e65c6e9be5f53be28bcbe28e"
+		},
+		{
+			"ImportPath": "gopkg.in/olivere/elastic.v3",
+			"Comment": "v3.0.18",
+			"Rev": "f4ef71cfe314c5552c67ced82799009995d6a082"
 		}
 	]
 }
