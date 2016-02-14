@@ -13,7 +13,7 @@ import (
 	. "github.com/sacheendra/es_benchmark/Godeps/_workspace/src/github.com/cenkalti/backoff"
 	"github.com/sacheendra/es_benchmark/Godeps/_workspace/src/github.com/gosuri/uilive"
 	"github.com/sacheendra/es_benchmark/Godeps/_workspace/src/github.com/joshlf/grammar"
-	"github.com/sacheendra/es_benchmark/Godeps/_workspace/src/gopkg.in/olivere/elastic.v3"
+	"github.com/sacheendra/es_benchmark/Godeps/_workspace/src/gopkg.in/olivere/elastic.v2"
 )
 
 var dummy *grammar.Grammar
