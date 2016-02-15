@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"strings"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -62,16 +63,23 @@ func main() {
 
 	go outputToTerminal()
 
+	clients := make([]*elastic.Client, numClients)
 	for i := 0; i < numClients; i++ {
 		client, err := elastic.NewClient(elastic.SetURL(esURL), elastic.SetSniff(sniff))
 		if err != nil {
-			log.Fatalln(err)
+			log.Fatalln("Error initializing client: ", err)
 		}
+
+		clients[i] = client
+	}
+
+	for i := 0; i < numClients; i++ {
 		for j := 0; j < numThreads; j++ {
-			go indexDocuments(client)
+			go indexDocuments(clients[i])
 			wg.Add(1)
 		}
 	}
+
 	wg.Wait()
 }
 
@@ -131,11 +139,13 @@ func indexDocuments(client *elastic.Client) {
 		if err != nil {
 			elastic_err, ok := err.(*elastic.Error)
 			if !ok {
-				log.Fatalln(err)
+				if !(strings.Contains(err.Error(), "http") || strings.Contains(err.Error(), "no Elasticsearch")) {
+					log.Fatalln("Other error while making request: ", err)
+				}
 			}
 
-			if elastic_err.Status != 429 {
-				log.Fatalln(elastic_err.Error())
+			if elastic_err != nil && elastic_err.Status != 429 {
+				log.Fatalln("Elasticsearch Client error: ", elastic_err.Error())
 			}
 
 			if skip := b.NextBackOff(); skip == Stop {
