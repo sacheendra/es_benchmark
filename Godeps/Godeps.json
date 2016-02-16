@@ -34,9 +34,9 @@
 			"Rev": "50c6bc5e4292a1d4e65c6e9be5f53be28bcbe28e"
 		},
 		{
-			"ImportPath": "gopkg.in/olivere/elastic.v2",
-			"Comment": "v2.0.29",
-			"Rev": "2480ca3ccceafbf07a125296adba707d7acc144c"
+			"ImportPath": "gopkg.in/olivere/elastic.v3",
+			"Comment": "v3.0.18",
+			"Rev": "f4ef71cfe314c5552c67ced82799009995d6a082"
 		}
 	]
 }
